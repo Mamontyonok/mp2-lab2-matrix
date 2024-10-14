@@ -6,7 +6,7 @@
 
 #ifndef __TDynamicMatrix_H__
 #define __TDynamicMatrix_H__
-//п
+
 #include <iostream>
 
 using namespace std;
