@@ -215,7 +215,7 @@ TEST(TDynamicVector, cant_add_vectors_with_not_equal_size)
     double *a = new double[10] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     TDynamicVector<double> v1(a, 10);
     delete[] a;
-    double *b = new double[15];
+    double *b = new double[15] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
     for (int i = 0; i < 15; i++)
         b[i] = 3 + i;
     TDynamicVector<double> v2(b, 15);
