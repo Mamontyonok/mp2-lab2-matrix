@@ -244,7 +244,7 @@ TEST(TDynamicVector, cant_subtract_vectors_with_not_equal_size)
     double *a = new double[10] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     TDynamicVector<double> v1(a, 10);
     delete[] a;
-    double *b = new double[10];
+    double *b = new double[15];
     for (int i = 0; i < 15; i++)
         b[i] = 3 + i;
     TDynamicVector<double> v2(b, 15);
