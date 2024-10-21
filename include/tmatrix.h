@@ -34,7 +34,7 @@ public:
   {
     assert(arr != nullptr && "TDynamicVector ctor requires non-nullptr arg");
     pMem = new T[sz];
-    std::copy(arr, arr + sz, pMem);
+    copy(arr, arr + sz, pMem);
   }
   TDynamicVector(const TDynamicVector& v)
   {
