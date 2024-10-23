@@ -2,8 +2,8 @@
 
 #include <gtest.h>
 
-size_t sz1 = 10;
-size_t sz2 = 15;
+static const size_t sz1 = 10;
+static const size_t sz2 = 15;
 
 TEST(TDynamicVector, can_create_vector_with_positive_length)
 {
@@ -78,9 +78,10 @@ TEST(TDynamicVector, can_assign_vector_to_itself)
 {
     double *a = new double[sz1] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     TDynamicVector<double> v1(a, sz1);
+    TDynamicVector<double> v2(a, sz1);
     delete[] a;
     v1 = v1;
-    EXPECT_EQ(v1, v1); //
+    EXPECT_EQ(v1, v2); 
 }
 
 TEST(TDynamicVector, can_assign_vectors_of_equal_size)

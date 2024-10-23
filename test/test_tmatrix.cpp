@@ -181,14 +181,20 @@ TEST(TDynamicMatrix, can_assign_matrix_to_itself)
     delete[] row2;
     delete[] row3;
     delete[] row4;
-    TDynamicMatrix<double> m(5);
-    m[0] = v0;
-    m[1] = v1;
-    m[2] = v2;
-    m[3] = v3;
-    m[4] = v4;
-    m = m;
-    EXPECT_EQ(m, m);
+    TDynamicMatrix<double> m1(5);
+    TDynamicMatrix<double> m2(5);
+    m1[0] = v0;
+    m1[1] = v1;
+    m1[2] = v2;
+    m1[3] = v3;
+    m1[4] = v4;
+    m2[0] = v0;
+    m2[1] = v1;
+    m2[2] = v2;
+    m2[3] = v3;
+    m2[4] = v4;
+    m1 = m1;
+    EXPECT_EQ(m1, m2);
 }
 
 TEST(TDynamicMatrix, can_assign_matrices_of_equal_size)

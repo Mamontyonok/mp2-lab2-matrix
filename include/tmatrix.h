@@ -29,19 +29,21 @@ public:
     if (sz == 0 || sz > MAX_VECTOR_SIZE)
       throw out_of_range("Vector size must meet the conditions");
     pMem = new T[sz]();// {}; // У типа T д.б. конструктор по умолчанию
+    if (pMem == nullptr)
+        throw bad_alloc();
   }
   TDynamicVector(T* arr, size_t s) : sz(s)
   {
     assert(arr != nullptr && "TDynamicVector ctor requires non-nullptr arg");
     pMem = new T[sz];
-    //copy(arr, arr + sz, pMem);
-      for (int i = 0; i < sz; i++)
-          pMem[i] = arr[i];
+    copy(arr, arr + sz, pMem);
   }
   TDynamicVector(const TDynamicVector& v)
   {
       sz = v.sz;
       pMem = new T[sz];
+      if (pMem == nullptr)
+          throw bad_alloc();
       copy(v.pMem, v.pMem + sz, pMem);
   }
     TDynamicVector(TDynamicVector&& v) noexcept
@@ -64,6 +66,8 @@ public:
   }
   TDynamicVector& operator=(TDynamicVector&& v) noexcept
   {
+      delete[] pMem;
+      pMem = nullptr;
       swap(*this, v);
       return *this;
   }
@@ -100,8 +104,10 @@ public:
           return false;
       bool f = true;
       for (int i = 0; i < sz; i++)
-          if (pMem[i] != v.pMem[i])
+          if (pMem[i] != v.pMem[i]) {
               f = false;
+              break;
+          }
       if (f)
           return true;
       else return false;
@@ -228,6 +234,8 @@ public:
   // матрично-векторные операции
   TDynamicVector<T> operator*(const TDynamicVector<T>& v)
   {
+      if (sz != v.sz)
+          throw logic_error("You can't multiply vectors of different lengths");
       TDynamicVector<T> Result(sz);
       for (size_t i = 0; i < sz; i++)
           Result[i] = pMem[i] * v;
@@ -237,6 +245,8 @@ public:
   // матрично-матричные операции
   TDynamicMatrix operator+(const TDynamicMatrix& m)
   {
+      if (sz != m.sz)
+          throw logic_error("You can't add matrices of different lengths");
       TDynamicMatrix Result(sz);
       for (size_t i = 0; i < sz; i++)
           Result.pMem[i] = pMem[i] + m.pMem[i];
@@ -244,6 +254,8 @@ public:
   }
   TDynamicMatrix operator-(const TDynamicMatrix& m)
   {
+      if (sz != m.sz)
+          throw logic_error("You can't substract matrices of different lengths");
       TDynamicMatrix Result(sz);
       for (size_t i = 0; i < sz; i++)
           Result.pMem[i] = pMem[i] - m.pMem[i];
@@ -251,6 +263,8 @@ public:
   }
   TDynamicMatrix operator*(const TDynamicMatrix& m)
   {
+      if (sz != m.sz)
+          throw logic_error("You can't multiply matrices of different lengths");
       TDynamicMatrix Result(sz);
       for (size_t i = 0; i < sz; i++)
           for (size_t j = 0; j < sz; j++)
